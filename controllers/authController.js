@@ -92,7 +92,11 @@ const authController = {
       console.log(user);
 
       await User.findByIdAndUpdate(user._id, { reset: result });
-      sendMail(email, "Password string to be included", result);
+      try {
+        sendMail(email, "Password string to be included", result);
+      } catch (error) {
+        res.send(error.message);
+      }
 
       res.send("string sent to mail");
     } catch (error) {
